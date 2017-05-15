@@ -1,0 +1,20 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+
+/*
+ * Jumbotron Text Centering
+ */
+
+.list-group-item-spacing {
+  width: 10px;
+  height: 40px;
+  padding: 40px 40px;
+  vertical-align: middle;    /* vertical alignment of the inline element */
+  text-align:center;
+}
