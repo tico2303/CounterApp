@@ -89,3 +89,14 @@ def logout():
         return redirect(url_for('index'))
 
 
+@app.route('/createteam',methods=["POST"])
+@login_required
+def createteam():
+    form = NewTeamForm()
+	user = User.query.filter_by(username=current_user.username).first()
+	return render_template("CreateTeam.html", user=user, form=form)
+
+
+
+
+
