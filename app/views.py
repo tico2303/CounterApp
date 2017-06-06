@@ -16,6 +16,7 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+# DB convience function
 def getUserTeams(uname):
     teamList = []
     user = User.query.filter_by(username=uname).first()
@@ -52,11 +53,10 @@ def login():
         #return '<h1>' + form.username.data  + " " + form.password.data + "</h1>"
         #get first user in query because usernames are unique
         user = User.query.filter_by(username=form.username.data).first()
-        print("user: ", user.username)
+        #print("user: ", user.username)
         if user:
             # checking password in db against what user entered in the form
             if check_password_hash(user.password, form.password.data):
-                print("passed check_password_has()")
                 login_user(user, remember=form.password.data)
                 return redirect(url_for('dashboard'))
         return "<h1>Invalid Username or Password</h1>"
