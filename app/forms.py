@@ -14,3 +14,4 @@ class RegisterForm(FlaskForm):
 	password = PasswordField("password", validators=[InputRequired(),Length(min=8, max=80) ])
 
 
+

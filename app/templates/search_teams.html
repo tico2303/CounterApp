@@ -1,0 +1,25 @@
+{% extends "dashnav.html" %}
+
+
+{% block content %}
+{{ super() }}
+
+<div class="jumbotron">
+    <div class="container"> 
+            <h1>Search Teams</h1>
+                <p> Search Teams Results Below.</p>
+                    {% if search_results.name %}
+                    <ul class="list-group">
+                        <li class="list-group-item">{{search_results.name}}</li>
+                    </ul>
+                    {% else %}
+                        <p> No Results Found </p>
+                    {% endif %}
+        </div><!-- starter-template-->
+    </div> 
+</div>
+
+         
+{% endblock %}
+
+

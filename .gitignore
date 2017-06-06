@@ -81,6 +81,8 @@ celerybeat-schedule
 # virtualenv
 venv/
 ENV/
+VoteApp/
+cntR/
 
 # Spyder project settings
 .spyderproject
