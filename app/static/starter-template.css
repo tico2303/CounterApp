@@ -11,8 +11,8 @@ body {
  * Jumbotron Text Centering
  */
 
-.list-group-item-spacing {
-  width: 10px;
+.button.list-group-item-spacing {
+  width: 40px;
   height: 40px;
   padding: 40px 40px;
   vertical-align: middle;    /* vertical alignment of the inline element */

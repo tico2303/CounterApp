@@ -8,15 +8,15 @@
 	<div class="starter-template">
           <h1>Welcome {{user.username}}!</h1>
           <p> This is your landing page</p>
-                <li> {{user.username}} Belongs to:
-			<div class= "list-group-item-spacing">
-				<div class="list-group">
-				{% for team in getUserTeams(user.username) %}
-					<button type="button" class="list-group-item">{{ team }}</button>
-				{% endfor %}
-				</div>
-			</div> <!-- item spacing -->
-                </li>
+            <li> {{user.username}} Belongs to:
+                <div class= "list-group-item-spacing">
+                    <div class="list-group">
+                    {% for team in getUserTeams(user.username) %}
+                        <button type="button" class="list-group-item">{{ team }}</button>
+                    {% endfor %}
+                    </div>
+                </div> <!-- item spacing -->
+             </li>
           <p><a class="btn btn-primary btn-lg" href="#" role="button">Vote</a></p>
    </div><!-- starter-template-->
   </div> 

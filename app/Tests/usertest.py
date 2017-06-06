@@ -150,7 +150,7 @@ def isMember(teamName, uname):
         if teamName in teamList:
                 return True
         else:
-                return False    
+                return False
 def clearAllVotes(team, user):
     if isAdmin(team,user):
         print user.username, " is Admin!"
