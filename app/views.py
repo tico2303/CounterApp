@@ -81,6 +81,14 @@ def dashboard():
 	user = User.query.filter_by(username=current_user.username).first()
 	return render_template("dashboard.html", user=user)
 
+@app.route('/search_teams', methods=["POST"])
+@login_required
+def search_teams():
+    search_team  = request.form['search_team']
+    user = User.query.filter_by(username=current_user.username).first()
+    search_team_results = Team.query.filter_by(name=search_team).first()
+    return render_template("search_teams.html", user=user, search_results = search_team_results)
+
 
 @app.route('/logout')
 @login_required

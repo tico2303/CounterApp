@@ -12,7 +12,7 @@ class User(UserMixin,db.Model):
 
 class Team(db.Model):
     id = db.Column(db.Integer,primary_key=True)
-    name = db.Column(db.String(50))
+    name = db.Column(db.String(50), unique=True)
     admin_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     members = db.relationship("Member", backref="team", lazy="dynamic")
 
