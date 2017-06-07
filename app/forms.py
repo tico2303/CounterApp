@@ -15,6 +15,7 @@ class RegisterForm(FlaskForm):
 
 
 class NewTeamForm(FlaskForm):
-	teamname = StringField("teamname", validators=[InputRequired()])
+    teamname = StringField("teamname", validators=[InputRequired()])
+    teampassword = StringField("teampassword", validators=[InputRequired()])
 
 

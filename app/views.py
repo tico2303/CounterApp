@@ -104,19 +104,24 @@ def createteam():
     user = User.query.filter_by(username=current_user.username).first()
     if form.validate_on_submit():
         print "teamName: ", form.teamname.data
-        newTeam =Team(name=form.teamname.data, admin=user)
+        newTeam =Team(name=form.teamname.data, admin=user, code=form.teampassword.data)
         newMem = Member(team=newTeam,membership=user)
         db.session.add(newTeam)
         db.session.add(newMem)
         db.session.commit() 
-        return redirect(url_for("dashboard"))
+        return redirect(url_for('teamcreated'))
     return render_template("CreateTeam.html", user=user, form=form)
 
+@app.route('/teamcreated', methods=["GET"])
+@login_required
+def teamcreated():
+    user = User.query.filter_by(username=current_user.username).first()
+    return render_template("TeamCreated.html", user=user)
 
 @app.route('/teamview',methods=["POST"])
 @login_required
 def teamview():
     team = request.form["teamname"]
-    render_template("Teamview.html", team=team )
+    return render_template("Teamview.html", team=team )
 
 
