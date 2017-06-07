@@ -36,6 +36,14 @@ def getTeamMembers(teamName):
         return ["Is not a member to any teams"]
     return membersList	
 
+#checks if team Name is taken
+def isValidNewTeam(teamName):
+    try:
+        team = Team.query.filter_by(name=teamName).first()
+        return False
+    except IntegrityError:
+        return True
+
 # add functions to jinja enviornment so they are callable in html templates
 app.jinja_env.globals.update(getUserTeams=getUserTeams)
 app.jinja_env.globals.update(getTeamMembers=getTeamMembers)
@@ -53,7 +61,6 @@ def login():
         #return '<h1>' + form.username.data  + " " + form.password.data + "</h1>"
         #get first user in query because usernames are unique
         user = User.query.filter_by(username=form.username.data).first()
-        #print("user: ", user.username)
         if user:
             # checking password in db against what user entered in the form
             if check_password_hash(user.password, form.password.data):
@@ -74,7 +81,6 @@ def signup():
 		return "<h1> New user has been created </h1>"
 	return render_template("signup.html", form=form)
 
-
 @app.route('/dashboard')
 @login_required
 def dashboard():
@@ -89,13 +95,11 @@ def search_teams():
     search_team_results = Team.query.filter_by(name=search_team).first()
     return render_template("search_teams.html", user=user, search_results = search_team_results)
 
-
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))
-
 
 @app.route('/createteam',methods=["GET","POST"])
 @login_required
@@ -104,19 +108,22 @@ def createteam():
     user = User.query.filter_by(username=current_user.username).first()
     if form.validate_on_submit():
         print "teamName: ", form.teamname.data
+        #if isValidNewTeam(form.teamname.data):
+        print "valid team name commiting %s to DB"%form.teamname.data
         newTeam =Team(name=form.teamname.data, admin=user)
         newMem = Member(team=newTeam,membership=user)
         db.session.add(newTeam)
         db.session.add(newMem)
-        db.session.commit() 
+        db.session.commit()
         return redirect(url_for("dashboard"))
     return render_template("CreateTeam.html", user=user, form=form)
 
-
-@app.route('/teamview',methods=["POST"])
+@app.route('/vote',methods=["GET","POST"])
 @login_required
-def teamview():
-    team = request.form["teamname"]
-    render_template("Teamview.html", team=team )
+def vote():
+    teamname = request.form["teamname"]
+    team = Team.query.filter_by(name=teamname).first()
+    user = User.query.filter_by(username=current_user.username).first()
+    return render_template("Vote.html", team=team,user=user )
 
 
