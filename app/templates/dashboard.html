@@ -12,7 +12,10 @@
                 <div class= "list-group-item-spacing">
                     <div class="list-group">
                     {% for team in getUserTeams(user.username) %}
-                        <button type="button" class="list-group-item">{{ team }}</button>
+                    <form action="{{url_for('teamview')}}" method="post">
+                        <input type="hidden" name="teamname" value="{{team}}"/>
+                        <input type="submit" class="btn btn-lg" value="{{ team }}"/>
+                    </form>
                     {% endfor %}
                     </div>
                 </div> <!-- item spacing -->

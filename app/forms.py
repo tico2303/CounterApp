@@ -16,6 +16,5 @@ class RegisterForm(FlaskForm):
 
 class NewTeamForm(FlaskForm):
 	teamname = StringField("teamname", validators=[InputRequired()])
-     
 
 

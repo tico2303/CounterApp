@@ -1,7 +1,7 @@
 from app import app
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for,request
 from models import User, Team, Member,db
-from forms import LoginForm, RegisterForm
+from forms import LoginForm, RegisterForm,NewTeamForm
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
@@ -85,18 +85,30 @@ def dashboard():
 @app.route('/logout')
 @login_required
 def logout():
-        logout_user()
-        return redirect(url_for('index'))
+    logout_user()
+    return redirect(url_for('index'))
 
 
-@app.route('/createteam',methods=["POST"])
+@app.route('/createteam',methods=["GET","POST"])
 @login_required
 def createteam():
     form = NewTeamForm()
-	user = User.query.filter_by(username=current_user.username).first()
-	return render_template("CreateTeam.html", user=user, form=form)
+    user = User.query.filter_by(username=current_user.username).first()
+    if form.validate_on_submit():
+        print "teamName: ", form.teamname.data
+        newTeam =Team(name=form.teamname.data, admin=user)
+        newMem = Member(team=newTeam,membership=user)
+        db.session.add(newTeam)
+        db.session.add(newMem)
+        db.session.commit() 
+        return redirect(url_for("dashboard"))
+    return render_template("CreateTeam.html", user=user, form=form)
 
 
-
+@app.route('/teamview',methods=["POST"])
+@login_required
+def teamview():
+    team = request.form["teamname"]
+    render_template("Teamview.html", team=team )
 
 
